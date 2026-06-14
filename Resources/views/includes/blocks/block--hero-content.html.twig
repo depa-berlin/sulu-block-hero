@@ -1,0 +1,75 @@
+{% set block_id = content._id|default %}
+{% set image = sulu_resolve_media(content.image, app.request.locale) %}
+{% set image_mobile = sulu_resolve_media(content.image_mobile, app.request.locale) %}
+{% set loading = content.loading %}
+{% set fetchpriority = null %}
+{% if content.fetchpriority_high == true %}
+    {% set loading = "eager" %}
+    {% set fetchpriority = "high" %}
+{% endif %}
+
+<div{% if content.attr_id|default %} id="{{ content.attr_id }}"{% endif %}
+    class="block--hero-content {{ content.attr_class }}{% if content.inverse_status|default %} inverse{% endif %}"
+    data-cms-block-id="{{ block_id }}" {{ sulu_block_preview(content) }}>
+    <div class="wrapper">
+        {% if content.link|default %}
+        <a href="{{ content.link }}" target="{{ view.link.target }}">
+            {% else %}
+            <div class="a">
+                {% endif %}
+
+                <div class="image-wrapper">
+                    {% if image_mobile %}
+                        <picture class="d-md-none">
+                            <source media="(min-width: 576px)"
+                                    srcset="{{ image_mobile.thumbnails['767x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['767x-x2'] }} 2x{% endif %}">
+                            <img src="{{ image_mobile.thumbnails['575x'] }}"
+                                 width="{{ image_mobile.properties.width }}"
+                                 height="{{ image_mobile.properties.height }}"
+                                 alt="{{ content.is_decorative ? '' : image_mobile.title }}"
+                                 {% if image_mobile.description %}title="{{ image_mobile.description }}"{% endif %}
+                                 loading="{{ loading }}"
+                                {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+                                 decoding="async">
+                        </picture>
+                    {% endif %}
+                    {% if image %}
+                        <picture class="d-none d-md-inline">
+                            <source media="(min-width: 1400px)"
+                                    srcset="{{ image.thumbnails['1920x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1920x-x2'] }} 2x{% endif %}">
+                            <source media="(min-width: 1200px)"
+                                    srcset="{{ image.thumbnails['1400x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1400x-x2'] }} 2x{% endif %}">
+                            <source media="(min-width: 992px)"
+                                    srcset="{{ image.thumbnails['1200x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1200x-x2'] }} 2x{% endif %}">
+                            <img src="{{ image.thumbnails['992x'] }}"
+                                 width="{{ image.properties.width }}"
+                                 height="{{ image.properties.height }}"
+                                 alt="{{ content.is_decorative ? '' : image.title }}"
+                                 {% if image.description %}title="{{ image.description }}"{% endif %}
+                                 loading="{{ loading }}"
+                                {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+                                 decoding="async">
+                        </picture>
+                    {% endif %}
+                </div>
+
+                <div class="content-wrapper boxed">
+                    <div class="content">
+                        {% if content.blocks|default([]) %}
+                            {% for block in content.blocks %}
+                                {% include 'includes/blocks/' ~ block.type ~ '.html.twig' with {
+                                    content: block,
+                                    view: view.blocks[loop.index0],
+                                } %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if content.link|default %}
+        </a>
+        {% else %}
+    </div>
+    {% endif %}
+</div>
+</div>

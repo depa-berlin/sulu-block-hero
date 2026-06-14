@@ -1,0 +1,48 @@
+{% set block_id = content._id|default %}
+{% set image = sulu_resolve_media(content.image, app.request.locale) %}
+{% set image_mobile = sulu_resolve_media(content.image_mobile, app.request.locale) %}
+{% set el = content.element_headline|default('h1') %}
+<div class="block--hero-call2action {% if content.inverse_status|default %}inverse{% endif %}"
+     data-cms-block-id="{{ block_id }}" {{ sulu_block_preview(content) }}>
+    <div class="wrapper">
+        <a {% if content.link|default %}href="{{ content.link }}" target="{{ view.link.target }}"{% endif %}>
+
+            {% if image %}
+                <div class="image-wrapper d-none d-md-block">
+                    <picture>
+                        <source media="(min-width: 1400px)" srcset="{{ image.thumbnails['1920x'] }}">
+                        <source media="(min-width: 1200px)" srcset="{{ image.thumbnails['1400x'] }}">
+                        <source media="(min-width: 992px)" srcset="{{ image.thumbnails['1200x'] }}">
+                        <img src="{{ image.thumbnails['992x'] }}"
+                             width="1920" height="768"
+                             alt="{{ image.title }}" title="{{ image.title }}"
+                             fetchpriority="high" loading="eager">
+                    </picture>
+                </div>
+            {% endif %}
+
+            {% if image_mobile %}
+                <div class="image-wrapper d-md-none">
+                    <img src="{{ image_mobile.thumbnails['768x450'] }}"
+                         alt="{{ image_mobile.title }}"
+                         title="{{ image_mobile.title }}"
+                         fetchpriority="high" loading="eager" height="450" width="768">
+                </div>
+            {% endif %}
+
+            <div class="content-wrapper boxed">
+                <div class="content">
+                    {% if content.headline|default %}
+                    <{{ el }} class="headline">{{ content.headline|nl2br }}</{{ el }}>
+                {% endif %}
+                {% if content.text|default %}
+                    <p>{{ content.text|nl2br }}</p>
+                {% endif %}
+                {% if content.button_text|default %}
+                    <span class="button">{{ content.button_text }}</span>
+                {% endif %}
+            </div>
+    </div>
+    </a>
+</div>
+</div>

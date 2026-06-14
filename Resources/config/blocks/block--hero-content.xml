@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xi="http://www.w3.org/2001/XInclude"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <key>block--hero-content</key>
+    <meta>
+        <title lang="en">Hero Content</title>
+        <title lang="de">Hero Content</title>
+    </meta>
+
+    <properties>
+        <property name="image" type="single_media_selection" mandatory="false">
+            <meta>
+                <title lang="en">Image</title>
+                <title lang="de">Bild</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+                <param name="min" value="1"/>
+                <param name="max" value="1"/>
+            </params>
+            <tag name="sulu.block_preview" priority="512"/>
+        </property>
+        <property name="image_mobile" type="single_media_selection" mandatory="false">
+            <meta>
+                <title lang="en">Image mobile</title>
+                <title lang="de">Bild mobile</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+                <param name="min" value="1"/>
+                <param name="max" value="1"/>
+            </params>
+
+        </property>
+        <property name="link" type="link">
+            <meta>
+                <title lang="en">Link</title>
+                <title lang="de">Link</title>
+            </meta>
+            <params>
+                <param name="enable_anchor" value="true"/>
+                <param name="enable_attributes" value="true"/>
+                <param name="types" type="collection">
+                    <param name="page"/>
+                    <param name="external"/>
+                    <param name="media"/>
+                </param>
+            </params>
+        </property>
+        <section name="blocks">
+            <meta>
+                <title lang="en">Contents</title>
+                <title lang="de">Inhalte</title>
+            </meta>
+            <properties>
+                <block name="blocks" default-type="block--content-text" minOccurs="0">
+
+                    <params>
+                        <param name="block_id_generator" value="true"/>
+                    </params>
+                    <types>
+                        <type ref="block--content-headline"/>
+                        <type ref="block--content-title"/>
+                        <type ref="block--content-text"/>
+                        <type ref="block--content-html"/>
+                        <type ref="block--content-button"/>
+                        <type ref="block--content-button-grid"/>
+                        <type ref="block--content-image"/>
+                        <type ref="block--content-list"/>
+
+                    </types>
+                </block>
+            </properties>
+        </section>
+        <section name="config_1">
+            <meta>
+                <title lang="en">Presentation</title>
+                <title lang="de">Darstellung</title>
+            </meta>
+            <properties>
+                <property name="inverse_status" type="checkbox">
+                    <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+                    <meta>
+                        <title lang="en">Inverse representation</title>
+                        <title lang="de">Inverse Darstellung</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="toggler"/>
+                        <param name="default_value" value="true"/>
+                    </params>
+                </property>
+                 </properties>
+        </section>
+        <xi:include href="../_fragments/config_image.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                      xpointer(/sulu:properties/*)"/>
+        <section name="config_2">
+            <meta>
+                <title lang="en">Config</title>
+                <title lang="de">Einstellungen</title>
+            </meta>
+            <properties>
+
+                <xi:include href="../_fragments/attr_class.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                      xpointer(/sulu:properties/*)"/>
+                <xi:include href="../_fragments/attr_id.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                      xpointer(/sulu:properties/*)"/>
+            </properties>
+
+
+        </section>
+    </properties>
+</template>

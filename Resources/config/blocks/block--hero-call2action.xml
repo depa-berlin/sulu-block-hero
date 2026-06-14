@@ -1,0 +1,121 @@
+<?xml version="1.0" ?>
+<template xmlns="http://schemas.sulu.io/template/template"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xi="http://www.w3.org/2001/XInclude"
+          xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/template-1.0.xsd">
+    <key>block--hero-call2action</key>
+    <meta>
+        <title lang="en">Hero Call2Action</title>
+        <title lang="de">Hero Call2Action</title>
+    </meta>
+
+    <properties>
+        <property name="image" type="single_media_selection" mandatory="true">
+            <meta>
+                <title lang="en">Image</title>
+                <title lang="de">Bild</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+                <param name="min" value="1"/>
+                <param name="max" value="1"/>
+            </params>
+            <tag name="sulu.block_preview" priority="512"/>
+        </property>
+        <property name="image_mobile" type="single_media_selection" mandatory="true">
+            <meta>
+                <title lang="en">Image mobile</title>
+                <title lang="de">Bild mobile</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+                <param name="min" value="1"/>
+                <param name="max" value="1"/>
+            </params>
+
+        </property>
+        <property name="inverse_status" type="checkbox">
+            <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+            <meta>
+                <title lang="en">Inverse representation</title>
+                <title lang="de">Inverse Darstellung</title>
+            </meta>
+            <params>
+                <param name="type" value="toggler"/>
+                <param name="default_value" value="true"/>
+            </params>
+        </property>
+        <property name="element_headline" type="single_select" colspan="2">
+            <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+            <meta>
+                <title lang="en">Element</title>
+                <title lang="de">Element</title>
+            </meta>
+            <params>
+                <param name="default_value" value="h1"/>
+
+                <param name="values" type="collection">
+                    <param name="h1">
+                        <meta>
+                            <title lang="en">H1</title>
+                        </meta>
+                    </param>
+                    <param name="h2">
+                        <meta>
+                            <title lang="en">H2</title>
+                        </meta>
+                    </param>
+                    <param name="h3">
+                        <meta>
+                            <title lang="en">H3</title>
+                        </meta>
+                    </param>
+                    <param name="p">
+                        <meta>
+                            <title lang="en">p</title>
+                        </meta>
+                    </param>
+                </param>
+            </params>
+        </property>
+        <property name="headline" type="text_area" colspan="10">
+            <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+            <meta>
+                <title lang="en">Headline</title>
+                <title lang="de">Überschrift</title>
+            </meta>
+            <tag name="sulu.block_preview" priority="512"/>
+        </property>
+        <property name="text" type="text_area">
+            <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+            <meta>
+                <title lang="en">Text</title>
+                <title lang="de">Text</title>
+            </meta>
+        </property>
+        <property name="button_text" type="text_line">
+            <!-- @see https://docs.sulu.io/en/2.2/book/extend-admin.html#selection-field-type -->
+            <meta>
+                <title lang="en">Button Text</title>
+                <title lang="de">Button Text</title>
+            </meta>
+        </property>
+        <property name="link" type="link">
+            <meta>
+                <title lang="en">Link</title>
+                <title lang="de">Link</title>
+            </meta>
+            <params>
+                <param name="enable_anchor" value="true"/>
+                <param name="enable_attributes" value="true"/>
+                <param name="types" type="collection">
+                    <param name="page"/>
+                    <param name="external"/>
+                    <param name="media"/>
+                </param>
+            </params>
+        </property>
+        <xi:include href="../_fragments/config_image.xml" xpointer="xmlns(sulu=http://schemas.sulu.io/template/template)
+                      xpointer(/sulu:properties/*)"/>
+    </properties>
+</template>

@@ -1,0 +1,35 @@
+{% set block_id = content._id|default %}
+{% set image = sulu_resolve_media(content.image, app.request.locale) %}
+{% set loading = content.loading %}
+{% set fetchpriority = null %}
+{% if content.fetchpriority_high == true %}
+    {% set loading = "eager" %}
+    {% set fetchpriority = "high" %}
+{% endif %}
+{% set is_preview = '/_sulu_preview' in app.request.pathinfo %}
+
+<div class="block--hero-image {{ content.attr_class }}" data-cms-block-id="{{ block_id }}">
+    {% if image|default %}
+        {% if image.credits|default %}
+            <figure>
+        {% endif %}
+        <picture>
+            <source media="(min-width: 1400px)" srcset="{{ image.thumbnails['1920x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1920x-x2'] }} 2x{% endif %}">
+            <source media="(min-width: 1200px)" srcset="{{ image.thumbnails['1400x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1400x-x2'] }} 2x{% endif %}">
+            <source media="(min-width: 992px)" srcset="{{ image.thumbnails['1200x'] }}{% if content.enable_x2 %}, {{ image.thumbnails['1200x-x2'] }} 2x{% endif %}">
+            <img src="{{ image.thumbnails['992x'] }}"
+                 alt="{{ content.is_decorative ? '' : image.title }}"
+                 {% if image.description %}title="{{ image.description }}"{% endif %}
+                 loading="{{ loading }}"
+                {% if fetchpriority %}fetchpriority="{{ fetchpriority }}"{% endif %}
+                 width="{{ image.properties.width }}" height="{{ image.properties.height }}"
+                 decoding="async">
+        </picture>
+        {% if image.credits|default %}
+            <figcaption>{{ image.credits }}</figcaption>
+            </figure>
+        {% endif %}
+    {% elseif is_preview %}
+        <img src="https://placehold.co/1920x500" alt>
+    {% endif %}
+</div>
