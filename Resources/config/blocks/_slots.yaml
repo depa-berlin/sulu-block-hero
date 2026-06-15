@@ -1,0 +1,7 @@
+section:
+    - block--hero-call2action
+    - block--hero-content
+    - block--hero-image
+
+container:
+    - block--hero-call2action
