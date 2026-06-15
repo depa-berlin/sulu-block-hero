@@ -15,7 +15,7 @@ class SuluBlockHeroExtension extends AbstractBlockExtension
 
     protected function getPackageName(): string
     {
-        return 'depa-berlin/sulu-block-hero';
+        return 'depa/sulu-block-hero';
     }
 
     protected function getMetadataParameterName(): string

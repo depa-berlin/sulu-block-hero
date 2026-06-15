@@ -1,12 +1,12 @@
 {
-    "name": "depa-berlin/sulu-block-hero",
+    "name": "depa/sulu-block-hero",
     "description": "Hero block collection for Sulu CMS (call2action, content, image, promo-image)",
     "type": "symfony-bundle",
     "license": "proprietary",
     "require": {
         "php": "^8.2",
         "symfony/framework-bundle": "^7.0",
-        "depa-berlin/sulu-block-helper": "@dev"
+        "depa/sulu-block-helper": "@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
