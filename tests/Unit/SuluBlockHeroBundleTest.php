@@ -2,32 +2,37 @@
 
 declare(strict_types=1);
 
-namespace Depa\SuluBlockHeroBundle\Tests\Unit\DependencyInjection;
+namespace Depa\SuluBlockHeroBundle\Tests\Unit;
 
-use Depa\SuluBlockHeroBundle\DependencyInjection\SuluBlockHeroExtension;
+use Depa\SuluBlockHeroBundle\SuluBlockHeroBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class SuluBlockHeroExtensionTest extends TestCase
+class SuluBlockHeroBundleTest extends TestCase
 {
     private ContainerBuilder $container;
-    private SuluBlockHeroExtension $extension;
+    private SuluBlockHeroBundle $bundle;
 
     protected function setUp(): void
     {
         $this->container = new ContainerBuilder();
-        $this->extension = new SuluBlockHeroExtension();
+        $this->bundle = new SuluBlockHeroBundle();
+    }
+
+    private function load(): void
+    {
+        $this->bundle->getContainerExtension()->load([], $this->container);
     }
 
     public function testLoadSetsBundleMetadataParameter(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         self::assertTrue($this->container->hasParameter('sulu_block_hero.bundle_metadata'));
     }
 
     public function testBundleMetadataHasRequiredKeys(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
         self::assertArrayHasKey('bundle', $meta);
@@ -38,7 +43,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testBundleMetadataContainsCorrectBundleName(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
         self::assertSame('SuluBlockHeroBundle', $meta['bundle']);
@@ -46,7 +51,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testBundleMetadataContainsCorrectPackageName(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
         self::assertSame('depa/sulu-block-hero', $meta['package']);
@@ -54,7 +59,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testBundleMetadataContainsAtLeastOneBlock(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
         self::assertNotEmpty($meta['blocks']);
@@ -62,7 +67,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testBlocksAreSortedAndUnique(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
         $blocks = $meta['blocks'];
@@ -74,7 +79,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testKnownHeroBlocksArePresent(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
 
@@ -85,7 +90,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testChildrenValuesAreArraysOfStrings(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
 
@@ -99,7 +104,7 @@ class SuluBlockHeroExtensionTest extends TestCase
 
     public function testHeroContentHasChildrenFromXml(): void
     {
-        $this->extension->load([], $this->container);
+        $this->load();
         $meta = $this->container->getParameter('sulu_block_hero.bundle_metadata');
         self::assertIsArray($meta);
 
