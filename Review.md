@@ -50,18 +50,29 @@ und aktuell nicht auslieferungsfähig (Rendering-Crash, fehlt in `_slots.yaml`).
   `block--hero-promo-image.html.twig:3` rendert `block--hero-call2action` als
   Wrapper-Klasse → korrekt: `block--hero-promo-image`.
 
-- [ ] **7. `Bundle::getPath()` zeigt auf `src/` statt Paket-Root**
+- [x] **7. `Bundle::getPath()` zeigt auf `src/` statt Paket-Root**
   `src/SuluBlockHeroBundle.php`: Die Bundle-Klasse liegt in `src/`, `Resources/` im
   Paket-Root. Konventionsbasierte Auflösung (Twig-Namespace `@SuluBlockHero`,
   pfadbasierte Discovery) läuft ins Leere. Fix:
   `public function getPath(): string { return \dirname(__DIR__); }`
+  **Erledigt (2026-07-08, überholt statt gefixt):** Statt des vorgeschlagenen manuellen
+  Overrides wurde das ganze Bundle (wie helper/content/swiper/layout/article/section/grid)
+  auf Symfonys `AbstractBundle` + flache Struktur migriert (`Resources/` → `config/`,
+  `templates/`); `getPath()` liefert dadurch automatisch den Paket-Root. Verifiziert:
+  `(new SuluBlockHeroBundle())->getPath()` gibt den Repo-Root zurück, nicht `src/`.
 
-- [ ] **8. `prepend()` ist ungetestet**
+- [x] **8. `prepend()` ist ungetestet**
   `tests/Unit/DependencyInjection/SuluBlockHeroExtensionTest.php` testet nur `load()`.
   Prepend registriert aber Block-XMLs und Twig-Pfade — die eigentliche
   Integrationsfläche. Test ergänzen: twig-Extension am ContainerBuilder registrieren,
   `prepend()` aufrufen, `$container->getExtensionConfig('twig')` auf erwartete Pfade
   prüfen.
+  **Erledigt/verlagert (2026-07-08):** Die komplette `prepend()`/Twig-Pfad-Logik liegt seit
+  der AbstractBundle-Migration zentral in `AbstractBlockBundle` (Repo `sulu-block-helper`)
+  und wird dort getestet (`testPrependRegistersTwigPathWhenTwigIsAvailable`,
+  `testTwigPathPointsToExistingDirectory`). Hero hat keine eigene Extension-Klasse mehr,
+  die eigene `load()`-Tests (`SuluBlockHeroBundleTest.php`) decken weiterhin ab, dass die
+  Block-Metadaten für dieses Bundle korrekt aus dem eigenen `config/blocks/` geladen werden.
 
 - [ ] **9. LICENSE-Datei fehlt**
   `README.md` verlinkt `LICENSE` ("See [LICENSE](LICENSE) for details."), die Datei
